@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  img(src='http://saidmlx.online/simple-vue/dist/logo.png/logo.png')
+  img(src='http://saidmlx.online/simple-vue/dist/logo.png')
   h1 SaidMusic
   select(v-model="selectedCountry")
     option(v-for= "country in countries" :value="country.value") {{country.name}}
