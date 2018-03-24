@@ -2,16 +2,17 @@
 #app
   img(src='./assets/logo.png')
   h1 SaidMusic
-  select
+  select(v-model="selectedCountry")
     option(v-for= "country in countries" :value="country.value") {{country.name}}
+  spinner(v-show="loadding")
   ul
     artist(v-for= "artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid") {{artist.name}}
 </template>
 
 <script>
-import getArtists from './api'
-
-import Artist from './components/Artist.vue'
+import getArtists from './api';
+import Artist from  './components/Artist.vue';
+import spinner from './components/Spinner.vue';
 
 export default {
   name: 'app',
@@ -19,21 +20,37 @@ export default {
     return {
       artists: [],
       countries:[
-        {name:"España",value:"Spain"},
-        {name:"México",value:"Mexico"},
-        {name:"Colombia",value:"Colombia"}
-      ]
+        {name:"España",value:"spain"},
+        {name:"México",value:"mexico"},
+        {name:"Colombia",value:"colombia"}
+      ],
+      selectedCountry:'colombia',
+      loadding:true
+    }
+  },
+  methods:{
+    refreshArtist(){
+      var self = this
+      this.loadding=true;
+      self.artists=[];
+      getArtists(this.selectedCountry)
+      .then(function(artists){
+        self.loadding=false
+        self.artists = artists
+      })
     }
   },
   components:{
-    Artist
+    Artist,
+    spinner
+  },
+  watch:{
+    selectedCountry:function(){
+      this.refreshArtist()
+    }
   },
   mounted: function() {
-    var self = this
-    getArtists()
-    .then(function(artists){
-      self.artists = artists
-    })
+    this.refreshArtist()
   }
 }
 </script>
