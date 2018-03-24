@@ -1,4 +1,4 @@
-# platzimusic
+# Simple Vue.js
 
 > A Vue.js project
 
@@ -27,3 +27,7 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 (https://pugjs.org/api/getting-started.html)[Pug]
 (http://html2jade.org)[Jade converter]
 (http://beautifytools.com/css-to-stylus-converter.php)(css to stylus)
+
+# The case
+
+Is a simple aplication that list the top chart of artist by country
