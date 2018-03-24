@@ -2,21 +2,38 @@
 #app
   img(src='./assets/logo.png')
   h1 SaidMusic
+  select
+    option(v-for= "country in countries" :value="country.value") {{country.name}}
   ul
-    li(v-for= "artist in artists") {{artist.name}}
+    artist(v-for= "artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid") {{artist.name}}
 </template>
 
 <script>
+import getArtists from './api'
+
+import Artist from './components/Artist.vue'
+
 export default {
   name: 'app',
   data () {
     return {
-      artists: [
-        {name:'David Bowie'},
-        {name:'David Bowie 2'},
-        {name:'David Bowie 3'}
+      artists: [],
+      countries:[
+        {name:"España",value:"Spain"},
+        {name:"México",value:"Mexico"},
+        {name:"Colombia",value:"Colombia"}
       ]
     }
+  },
+  components:{
+    Artist
+  },
+  mounted: function() {
+    var self = this
+    getArtists()
+    .then(function(artists){
+      self.artists = artists
+    })
   }
 }
 </script>
